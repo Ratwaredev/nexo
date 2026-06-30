@@ -1,0 +1,27 @@
+{
+  "component": "team carousel",
+  "change": "one full person per slide, horizontal portrait/text composition, explicit arrows and dots",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844,
+      "overflow_x": 0
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "overflow_x": 0
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "overflow_x": 0
+    }
+  ],
+  "interaction": {
+    "next_button": "passed",
+    "active_index_after_click": 1,
+    "javascript_errors": []
+  },
+  "scope_note": "The screenshots isolate the modified DOM layer; the Three.js bundle was not changed."
+}
