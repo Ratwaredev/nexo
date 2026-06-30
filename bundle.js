@@ -33253,7 +33253,7 @@ void main() {
     if (event.key === "ArrowLeft" || event.key === "PageUp") goTo(0);
   });
   addEventListener("wheel", (event) => {
-    if (innerWidth <= 760) return;
+    if ((innerWidth <= 820 || (innerWidth <= 960 && innerHeight <= 540))) return;
     event.preventDefault();
     if (navigationTween) {
       navigationTween = null;
@@ -33353,18 +33353,19 @@ void main() {
     cursorLineGeometry.attributes.position.needsUpdate = true;
   }
   function updateCameraAndObjects(nowSeconds) {
-    const mobile = innerWidth <= 760;
+    const mobile = (innerWidth <= 820 || (innerWidth <= 960 && innerHeight <= 540));
     if (mobile) {
-      camera.position.set(pointer.x * 0.04, 0.2 + pointer.y * 0.03, 12.7);
-      camera.lookAt(0, 0, 0);
-      xRoot.position.set(liveProgress > 0.5 ? -0.12 : 0.08, 0.12, 0);
+      const mobileLandscape = innerWidth > innerHeight;
+      camera.position.set(pointer.x * 0.03, mobileLandscape ? 0.1 : 0.16, mobileLandscape ? 11.8 : 11.45);
+      camera.lookAt(0, mobileLandscape ? 0.02 : -0.03, 0);
+      xRoot.position.set(0, mobileLandscape ? 0.02 : -0.02, 0);
       xRoot.quaternion.copy(currentRootQuat);
-      xRoot.rotateX(pointer.y * 0.018);
-      xRoot.rotateY(pointer.x * 0.028);
-      xRoot.scale.setScalar(currentScale * 0.68);
-      networkRoot.position.set(liveProgress > 0.5 ? -0.1 : 0.05, 0.04, -0.15);
+      xRoot.rotateX(pointer.y * 0.014);
+      xRoot.rotateY(pointer.x * 0.022);
+      xRoot.scale.setScalar(mobileLandscape ? 0.56 : 0.64);
+      networkRoot.position.set(0, mobileLandscape ? 0 : -0.02, -0.15);
       networkRoot.quaternion.copy(currentNetworkQuat);
-      networkRoot.scale.setScalar(0.82);
+      networkRoot.scale.setScalar(mobileLandscape ? 0.74 : 0.82);
     } else {
       const px2 = pointer.x * 0.11;
       const py2 = pointer.y * 0.08;
@@ -33425,7 +33426,8 @@ void main() {
   }
   function onResize() {
     const w = innerWidth;
-    const h = innerWidth <= 760 ? Math.round(innerHeight * 0.46) : innerHeight;
+    const mobileLayout = innerWidth <= 820 || (innerWidth <= 960 && innerHeight <= 540);
+  const h = mobileLayout ? (innerWidth > innerHeight ? innerHeight : Math.round(Math.min(innerHeight * 0.34, 310))) : innerHeight;
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     renderer.setSize(w, h, false);

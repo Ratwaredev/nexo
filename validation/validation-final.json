@@ -1,0 +1,322 @@
+{
+  "mobile": [
+    {
+      "label": "320x568",
+      "metrics": {
+        "viewport": [
+          320,
+          568
+        ],
+        "body": [
+          320,
+          2696
+        ],
+        "overflow": {
+          "minLeft": 0,
+          "maxRight": 320,
+          "excess": 0,
+          "offender": ""
+        },
+        "heroHeight": 657,
+        "mobileDisplay": "block",
+        "desktopDisplay": "none",
+        "webglSupported": false,
+        "fallbackOpacity": "1",
+        "buttons": [
+          {
+            "text": "Agendar llamada ↗",
+            "width": 141,
+            "height": 51,
+            "scrollWidth": 139,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "Ver servicios ↓",
+            "width": 141,
+            "height": 51,
+            "scrollWidth": 139,
+            "whiteSpace": "nowrap"
+          }
+        ]
+      },
+      "menu": null,
+      "anchor": null,
+      "errors": []
+    },
+    {
+      "label": "360x640",
+      "metrics": {
+        "viewport": [
+          360,
+          640
+        ],
+        "body": [
+          360,
+          2686
+        ],
+        "overflow": {
+          "minLeft": 0,
+          "maxRight": 360,
+          "excess": 0,
+          "offender": ""
+        },
+        "heroHeight": 667,
+        "mobileDisplay": "block",
+        "desktopDisplay": "none",
+        "webglSupported": false,
+        "fallbackOpacity": "1",
+        "buttons": [
+          {
+            "text": "Agendar llamada ↗",
+            "width": 156,
+            "height": 51,
+            "scrollWidth": 154,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "Ver servicios ↓",
+            "width": 156,
+            "height": 51,
+            "scrollWidth": 154,
+            "whiteSpace": "nowrap"
+          }
+        ]
+      },
+      "menu": null,
+      "anchor": null,
+      "errors": []
+    },
+    {
+      "label": "375x667",
+      "metrics": {
+        "viewport": [
+          375,
+          667
+        ],
+        "body": [
+          375,
+          2719
+        ],
+        "overflow": {
+          "minLeft": 0,
+          "maxRight": 375,
+          "excess": 0,
+          "offender": ""
+        },
+        "heroHeight": 682,
+        "mobileDisplay": "block",
+        "desktopDisplay": "none",
+        "webglSupported": false,
+        "fallbackOpacity": "1",
+        "buttons": [
+          {
+            "text": "Agendar llamada ↗",
+            "width": 163,
+            "height": 51,
+            "scrollWidth": 161,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "Ver servicios ↓",
+            "width": 163,
+            "height": 51,
+            "scrollWidth": 161,
+            "whiteSpace": "nowrap"
+          }
+        ]
+      },
+      "menu": null,
+      "anchor": null,
+      "errors": []
+    },
+    {
+      "label": "390x844",
+      "metrics": {
+        "viewport": [
+          390,
+          844
+        ],
+        "body": [
+          390,
+          2803
+        ],
+        "overflow": {
+          "minLeft": 0,
+          "maxRight": 390,
+          "excess": 0,
+          "offender": ""
+        },
+        "heroHeight": 749,
+        "mobileDisplay": "block",
+        "desktopDisplay": "none",
+        "webglSupported": false,
+        "fallbackOpacity": "1",
+        "buttons": [
+          {
+            "text": "Agendar llamada ↗",
+            "width": 170,
+            "height": 51,
+            "scrollWidth": 168,
+            "whiteSpace": "nowrap"
+          },
+          {
+            "text": "Ver servicios ↓",
+            "width": 170,
+            "height": 51,
+            "scrollWidth": 168,
+            "whiteSpace": "nowrap"
+          }
+        ]
+      },
+      "menu": {
+        "expanded": "true",
+        "hidden": "false",
+        "open": true,
+        "bodyLocked": true,
+        "opacity": "1"
+      },
+      "anchor": {
+        "scrollY": 1346,
+        "sectionTop": 72,
+        "menuOpen": false,
+        "bodyLocked": false
+      },
+      "errors": []
+    },
+    {
+      "label": "412x915",
+      "metrics": {
+        "viewport": [
+          412,
+          915
+        ],
+        "body": [
+          412,
+          2861
+        ],
+        "overflow": {
+          "minLeft": 0,
+          "maxRight": 412,
+          "excess": 0,
+          "offender": ""
+        },
+        "heroHeight": 780,
+        "mobileDisplay": "block",
+        "desktopDisplay": "none",
+        "webglSupported": false,
+        "fallbackOpacity": "1",
+        "buttons": [
+          {
+            "text": "Agendar llamada ↗",
+            "width": 180,
+            "height": 51,
+            "scrollWidth": 178,
+            "whiteSpace": "normal"
+          },
+          {
+            "text": "Ver servicios ↓",
+            "width": 180,
+            "height": 51,
+            "scrollWidth": 178,
+            "whiteSpace": "normal"
+          }
+        ]
+      },
+      "menu": null,
+      "anchor": null,
+      "errors": []
+    },
+    {
+      "label": "430x932",
+      "metrics": {
+        "viewport": [
+          430,
+          932
+        ],
+        "body": [
+          430,
+          2877
+        ],
+        "overflow": {
+          "minLeft": 0,
+          "maxRight": 430,
+          "excess": 0,
+          "offender": ""
+        },
+        "heroHeight": 784,
+        "mobileDisplay": "block",
+        "desktopDisplay": "none",
+        "webglSupported": false,
+        "fallbackOpacity": "1",
+        "buttons": [
+          {
+            "text": "Agendar llamada ↗",
+            "width": 188,
+            "height": 51,
+            "scrollWidth": 186,
+            "whiteSpace": "normal"
+          },
+          {
+            "text": "Ver servicios ↓",
+            "width": 188,
+            "height": 51,
+            "scrollWidth": 186,
+            "whiteSpace": "normal"
+          }
+        ]
+      },
+      "menu": null,
+      "anchor": null,
+      "errors": []
+    },
+    {
+      "label": "844x390-landscape",
+      "metrics": {
+        "viewport": [
+          844,
+          390
+        ],
+        "body": [
+          844,
+          2342
+        ],
+        "overflow": {
+          "minLeft": 0,
+          "maxRight": 844,
+          "excess": 0,
+          "offender": ""
+        },
+        "heroHeight": 390,
+        "mobileDisplay": "block",
+        "desktopDisplay": "none",
+        "webglSupported": false,
+        "fallbackOpacity": "1",
+        "buttons": [
+          {
+            "text": "Agendar llamada ↗",
+            "width": 211,
+            "height": 43,
+            "scrollWidth": 209,
+            "whiteSpace": "normal"
+          },
+          {
+            "text": "Ver servicios ↓",
+            "width": 211,
+            "height": 43,
+            "scrollWidth": 209,
+            "whiteSpace": "normal"
+          }
+        ]
+      },
+      "menu": null,
+      "anchor": null,
+      "errors": []
+    }
+  ],
+  "desktopIsolation": {
+    "mobile": "none",
+    "header": "flex",
+    "main": "block",
+    "bodyOverflow": "hidden"
+  }
+}
