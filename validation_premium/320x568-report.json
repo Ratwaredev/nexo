@@ -1,0 +1,72 @@
+{
+  "viewport": "320x568",
+  "states": {
+    "white": {
+      "sw": 320,
+      "cw": 320,
+      "sh": 568,
+      "ch": 568,
+      "state": {
+        "scene": 0,
+        "progress": 0,
+        "targetProgress": 0,
+        "transitioning": true,
+        "canvas": {
+          "width": 320,
+          "height": 568
+        },
+        "viewport": {
+          "width": 320,
+          "height": 568
+        }
+      }
+    },
+    "turn": {
+      "sw": 320,
+      "cw": 320,
+      "sh": 568,
+      "ch": 568,
+      "state": {
+        "scene": 0,
+        "progress": 0.5,
+        "targetProgress": 0.5,
+        "transitioning": true,
+        "canvas": {
+          "width": 320,
+          "height": 568
+        },
+        "viewport": {
+          "width": 320,
+          "height": 568
+        }
+      }
+    },
+    "team": {
+      "sw": 320,
+      "cw": 320,
+      "sh": 568,
+      "ch": 568,
+      "state": {
+        "scene": 0,
+        "progress": 1,
+        "targetProgress": 1,
+        "transitioning": true,
+        "canvas": {
+          "width": 320,
+          "height": 568
+        },
+        "viewport": {
+          "width": 320,
+          "height": 568
+        }
+      }
+    },
+    "services": {
+      "sw": 320,
+      "cw": 320,
+      "sh": 568,
+      "ch": 568
+    }
+  },
+  "errors": []
+}

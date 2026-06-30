@@ -422,6 +422,9 @@ let currentScale = pose0.scale;
 function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
 function smoothStep(t) { return t * t * (3 - 2 * t); }
 function clamp01(v) { return THREE.MathUtils.clamp(v, 0, 1); }
+function isMobileViewport() {
+  return innerWidth <= 760 || (innerHeight <= 500 && matchMedia('(pointer: coarse)').matches);
+}
 function lerpColor(a, b, t) { return a.clone().lerp(b, t); }
 
 function updateProgressUI(t) {
@@ -457,22 +460,40 @@ function setDomScene(progressValue) {
     link.style.borderColor = dark ? 'rgba(207,216,255,.20)' : 'rgba(21,25,39,.17)';
   });
 
-  const introShift = -70 * Math.min(1, progressValue / 0.46);
-  const teamShift = 70 * Math.max(0, 1 - (progressValue - 0.54) / 0.46);
+  const mobile = isMobileViewport();
+  if (mobile) {
+    const introVisible = progressValue < 0.42;
+    const teamVisible = progressValue > 0.56;
+    const introOpacity = 1 - smoothStep(clamp01((progressValue - 0.10) / 0.24));
+    const teamOpacity = smoothStep(clamp01((progressValue - 0.60) / 0.24));
 
-  introCopy.setAttribute('aria-hidden', introActive ? 'false' : 'true');
-  introCopy.style.opacity = introActive ? String(1 - smoothStep(clamp01((progressValue - 0.20) / 0.40))) : '0';
-  introCopy.style.pointerEvents = progressValue < 0.46 ? 'auto' : 'none';
-  introCopy.style.transform = introActive
-    ? `translate(${introShift}px, -50%) scale(${1 - progressValue * 0.03})`
-    : 'translate(-70px, -50%) scale(.98)';
+    introCopy.setAttribute('aria-hidden', introVisible ? 'false' : 'true');
+    introCopy.style.opacity = String(introOpacity);
+    introCopy.style.pointerEvents = progressValue < 0.28 ? 'auto' : 'none';
+    introCopy.style.transform = 'none';
 
-  teamCopy.setAttribute('aria-hidden', teamActive ? 'false' : 'true');
-  teamCopy.style.opacity = teamActive ? String(smoothStep(clamp01((progressValue - 0.38) / 0.40))) : '0';
-  teamCopy.style.pointerEvents = progressValue > 0.54 ? 'auto' : 'none';
-  teamCopy.style.transform = teamActive
-    ? `translate(${Math.max(0, teamShift)}px, -50%) scale(${0.985 + progressValue * 0.02})`
-    : 'translate(70px, -50%) scale(.98)';
+    teamCopy.setAttribute('aria-hidden', teamVisible ? 'false' : 'true');
+    teamCopy.style.opacity = String(teamOpacity);
+    teamCopy.style.pointerEvents = progressValue > 0.76 ? 'auto' : 'none';
+    teamCopy.style.transform = 'none';
+  } else {
+    const introShift = -70 * Math.min(1, progressValue / 0.46);
+    const teamShift = 70 * Math.max(0, 1 - (progressValue - 0.54) / 0.46);
+
+    introCopy.setAttribute('aria-hidden', introActive ? 'false' : 'true');
+    introCopy.style.opacity = introActive ? String(1 - smoothStep(clamp01((progressValue - 0.20) / 0.40))) : '0';
+    introCopy.style.pointerEvents = progressValue < 0.46 ? 'auto' : 'none';
+    introCopy.style.transform = introActive
+      ? `translate(${introShift}px, -50%) scale(${1 - progressValue * 0.03})`
+      : 'translate(-70px, -50%) scale(.98)';
+
+    teamCopy.setAttribute('aria-hidden', teamActive ? 'false' : 'true');
+    teamCopy.style.opacity = teamActive ? String(smoothStep(clamp01((progressValue - 0.38) / 0.40))) : '0';
+    teamCopy.style.pointerEvents = progressValue > 0.54 ? 'auto' : 'none';
+    teamCopy.style.transform = teamActive
+      ? `translate(${Math.max(0, teamShift)}px, -50%) scale(${0.985 + progressValue * 0.02})`
+      : 'translate(70px, -50%) scale(.98)';
+  }
 
   updateProgressUI(progressValue);
 }
@@ -619,7 +640,7 @@ function goTo(index, instant = false) {
     from: progress,
     to: clamped,
     start: performance.now(),
-    duration: 1280,
+    duration: isMobileViewport() ? 860 : 1280,
   };
   targetProgress = clamped;
   motionEnergy = Math.max(motionEnergy, 0.42);
@@ -647,7 +668,7 @@ addEventListener('keydown', (event) => {
 });
 
 addEventListener('wheel', (event) => {
-  if ((innerWidth <= 820 || (innerWidth <= 960 && innerHeight <= 540))) return;
+  if (isMobileViewport()) return;
   event.preventDefault();
   if (navigationTween) {
     navigationTween = null;
@@ -658,6 +679,66 @@ addEventListener('wheel', (event) => {
   motionEnergy = Math.min(1, motionEnergy + Math.abs(impulse) * 5.5);
   lastWheelAt = performance.now();
 }, { passive: false });
+
+// Mobile keeps the desktop concept: the vertical gesture directly drives the real 3D transition.
+let touchGesture = null;
+
+addEventListener('touchstart', (event) => {
+  if (!isMobileViewport() || event.touches.length !== 1) return;
+  const target = event.target;
+  if (target.closest('a, button, .people')) return;
+  if (teamCopy.classList.contains('is-services')) return;
+  const touch = event.touches[0];
+  touchGesture = {
+    x: touch.clientX,
+    y: touch.clientY,
+    lastY: touch.clientY,
+    startProgress: progress,
+    startedAt: performance.now(),
+    vertical: null,
+  };
+  navigationTween = null;
+  transitionProgressOverride = null;
+  targetProgress = progress;
+}, { passive: true });
+
+addEventListener('touchmove', (event) => {
+  if (!touchGesture || event.touches.length !== 1 || !isMobileViewport()) return;
+  const touch = event.touches[0];
+  const dx = touch.clientX - touchGesture.x;
+  const dy = touch.clientY - touchGesture.y;
+  if (touchGesture.vertical === null && Math.max(Math.abs(dx), Math.abs(dy)) > 8) {
+    touchGesture.vertical = Math.abs(dy) >= Math.abs(dx) * 1.05;
+  }
+  if (!touchGesture.vertical) return;
+  event.preventDefault();
+  const travel = Math.max(260, innerHeight * 0.58);
+  const next = clamp01(touchGesture.startProgress - dy / travel);
+  progress = next;
+  targetProgress = next;
+  progressVelocity = 0;
+  currentScene = next > 0.5 ? 1 : 0;
+  motionEnergy = Math.min(1, Math.abs(touch.clientY - touchGesture.lastY) * 0.055 + 0.18);
+  touchGesture.lastY = touch.clientY;
+  applyPoseBlend(next, performance.now() * 0.001);
+}, { passive: false });
+
+function finishTouchGesture(event) {
+  if (!touchGesture || !isMobileViewport()) return;
+  const changed = event.changedTouches && event.changedTouches[0];
+  const endY = changed ? changed.clientY : touchGesture.lastY;
+  const dy = endY - touchGesture.y;
+  const elapsed = Math.max(1, performance.now() - touchGesture.startedAt);
+  const velocity = -dy / elapsed;
+  const wasVertical = touchGesture.vertical;
+  touchGesture = null;
+  if (!wasVertical) return;
+  const destination = velocity > 0.22 || progress > 0.52 ? 1 : (velocity < -0.22 || progress < 0.48 ? 0 : Math.round(progress));
+  goTo(destination);
+}
+
+addEventListener('touchend', finishTouchGesture, { passive: true });
+addEventListener('touchcancel', finishTouchGesture, { passive: true });
 
 const dummy = new THREE.Object3D();
 const nodePositions = Array.from({ length: nodeCount }, () => new THREE.Vector3());
@@ -751,19 +832,29 @@ function updateNetwork(time) {
 }
 
 function updateCameraAndObjects(nowSeconds) {
-  const mobile = (innerWidth <= 820 || (innerWidth <= 960 && innerHeight <= 540));
+  const mobile = isMobileViewport();
   if (mobile) {
-    const mobileLandscape = innerWidth > innerHeight;
-    camera.position.set(pointer.x * 0.03, mobileLandscape ? 0.10 : 0.16, mobileLandscape ? 11.8 : 11.45);
-    camera.lookAt(0, mobileLandscape ? 0.02 : -0.03, 0);
-    xRoot.position.set(0, mobileLandscape ? 0.02 : -0.02, 0);
+    const t = smoothStep(liveProgress);
+    const landscape = innerWidth > innerHeight;
+    if (landscape) {
+      camera.position.set(pointer.x * 0.026, 0.08 + pointer.y * 0.018, 12.45);
+      camera.lookAt(0.30, 0.10, 0);
+      xRoot.position.set(2.05, 0.06, 0.04);
+      xRoot.scale.setScalar(currentScale * THREE.MathUtils.lerp(0.72, 0.70, t));
+      networkRoot.position.set(1.96, 0.03, -0.12);
+      networkRoot.scale.setScalar(THREE.MathUtils.lerp(0.78, 0.72, t));
+    } else {
+      camera.position.set(pointer.x * 0.028, 0.10 + pointer.y * 0.018, 12.55);
+      camera.lookAt(0, 0.14, 0);
+      xRoot.position.set(0, THREE.MathUtils.lerp(1.26, 1.85, t), 0.05);
+      xRoot.scale.setScalar(currentScale * THREE.MathUtils.lerp(0.65, 0.58, t));
+      networkRoot.position.set(0, THREE.MathUtils.lerp(1.20, 1.79, t), -0.12);
+      networkRoot.scale.setScalar(THREE.MathUtils.lerp(0.72, 0.66, t));
+    }
     xRoot.quaternion.copy(currentRootQuat);
-    xRoot.rotateX(pointer.y * 0.014);
-    xRoot.rotateY(pointer.x * 0.022);
-    xRoot.scale.setScalar(mobileLandscape ? 0.56 : 0.64);
-    networkRoot.position.set(0, mobileLandscape ? 0.0 : -0.02, -0.15);
+    xRoot.rotateX(pointer.y * 0.018);
+    xRoot.rotateY(pointer.x * 0.028);
     networkRoot.quaternion.copy(currentNetworkQuat);
-    networkRoot.scale.setScalar(mobileLandscape ? 0.74 : 0.82);
   } else {
     const px = pointer.x * 0.11;
     const py = pointer.y * 0.08;
@@ -828,8 +919,7 @@ function animate(now) {
 
 function onResize() {
   const w = innerWidth;
-  const mobileLayout = innerWidth <= 820 || (innerWidth <= 960 && innerHeight <= 540);
-  const h = mobileLayout ? (innerWidth > innerHeight ? innerHeight : Math.round(Math.min(innerHeight * 0.34, 310))) : innerHeight;
+  const h = innerHeight;
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
   renderer.setSize(w, h, false);

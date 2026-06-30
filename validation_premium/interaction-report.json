@@ -1,0 +1,38 @@
+{
+  "swipe_up": {
+    "scene": 1,
+    "progress": 1,
+    "targetProgress": 1,
+    "transitioning": false,
+    "canvas": {
+      "width": 390,
+      "height": 844
+    },
+    "viewport": {
+      "width": 390,
+      "height": 844
+    }
+  },
+  "services_open": true,
+  "swipe_down": {
+    "scene": 0,
+    "progress": 0,
+    "targetProgress": 0,
+    "transitioning": false,
+    "canvas": {
+      "width": 390,
+      "height": 844
+    },
+    "viewport": {
+      "width": 390,
+      "height": 844
+    }
+  },
+  "errors": [],
+  "overflow": {
+    "sw": 390,
+    "cw": 390,
+    "sh": 844,
+    "ch": 844
+  }
+}

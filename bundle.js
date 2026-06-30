@@ -1,5 +1,5 @@
 (() => {
-  // node_modules/three/build/three.core.js
+  // ../../../../tmp/nexo_build_deps/node_modules/three/build/three.core.js
   var REVISION = "185";
   var CullFaceNone = 0;
   var CullFaceBack = 1;
@@ -20191,7 +20191,7 @@
     }
   }
 
-  // node_modules/three/build/three.module.js
+  // ../../../../tmp/nexo_build_deps/node_modules/three/build/three.module.js
   function WebGLAnimation() {
     let context = null;
     let isAnimating = false;
@@ -31645,7 +31645,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/environments/RoomEnvironment.js
+  // ../../../../tmp/nexo_build_deps/node_modules/three/examples/jsm/environments/RoomEnvironment.js
   var RoomEnvironment = class extends Scene {
     constructor() {
       super();
@@ -31746,7 +31746,7 @@ void main() {
     return material;
   }
 
-  // node_modules/three/examples/jsm/shaders/CopyShader.js
+  // ../../../../tmp/nexo_build_deps/node_modules/three/examples/jsm/shaders/CopyShader.js
   var CopyShader = {
     name: "CopyShader",
     uniforms: {
@@ -31786,7 +31786,7 @@ void main() {
     )
   };
 
-  // node_modules/three/examples/jsm/postprocessing/Pass.js
+  // ../../../../tmp/nexo_build_deps/node_modules/three/examples/jsm/postprocessing/Pass.js
   var Pass = class {
     /**
      * Constructs a new pass.
@@ -31877,7 +31877,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/postprocessing/ShaderPass.js
+  // ../../../../tmp/nexo_build_deps/node_modules/three/examples/jsm/postprocessing/ShaderPass.js
   var ShaderPass = class extends Pass {
     /**
      * Constructs a new shader pass.
@@ -31942,7 +31942,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/postprocessing/MaskPass.js
+  // ../../../../tmp/nexo_build_deps/node_modules/three/examples/jsm/postprocessing/MaskPass.js
   var MaskPass = class extends Pass {
     /**
      * Constructs a new mask pass.
@@ -32030,7 +32030,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/postprocessing/EffectComposer.js
+  // ../../../../tmp/nexo_build_deps/node_modules/three/examples/jsm/postprocessing/EffectComposer.js
   var EffectComposer = class {
     /**
      * Constructs a new effect composer.
@@ -32215,7 +32215,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/postprocessing/RenderPass.js
+  // ../../../../tmp/nexo_build_deps/node_modules/three/examples/jsm/postprocessing/RenderPass.js
   var RenderPass = class extends Pass {
     /**
      * Constructs a new render pass.
@@ -32288,7 +32288,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/shaders/LuminosityHighPassShader.js
+  // ../../../../tmp/nexo_build_deps/node_modules/three/examples/jsm/shaders/LuminosityHighPassShader.js
   var LuminosityHighPassShader = {
     name: "LuminosityHighPassShader",
     uniforms: {
@@ -32340,7 +32340,7 @@ void main() {
     )
   };
 
-  // node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js
+  // ../../../../tmp/nexo_build_deps/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js
   var UnrealBloomPass = class _UnrealBloomPass extends Pass {
     /**
      * Constructs a new Unreal Bloom pass.
@@ -33059,6 +33059,9 @@ void main() {
   function clamp01(v) {
     return MathUtils.clamp(v, 0, 1);
   }
+  function isMobileViewport() {
+    return innerWidth <= 760 || innerHeight <= 500 && matchMedia("(pointer: coarse)").matches;
+  }
   function lerpColor(a, b, t) {
     return a.clone().lerp(b, t);
   }
@@ -33093,16 +33096,32 @@ void main() {
       link.style.background = dark ? "rgba(8,14,31,.48)" : "rgba(255,255,255,.44)";
       link.style.borderColor = dark ? "rgba(207,216,255,.20)" : "rgba(21,25,39,.17)";
     });
-    const introShift = -46 * Math.min(1, progressValue / 0.46);
-    const teamShift = 46 * Math.max(0, 1 - (progressValue - 0.54) / 0.46);
-    introCopy.setAttribute("aria-hidden", introActive ? "false" : "true");
-    introCopy.style.opacity = introActive ? String(1 - smoothStep(clamp01((progressValue - 0.2) / 0.4))) : "0";
-    introCopy.style.pointerEvents = progressValue < 0.46 ? "auto" : "none";
-    introCopy.style.transform = introActive ? `translate(${introShift}px, -50%) scale(${1 - progressValue * 0.02})` : "translate(-46px, -50%) scale(.99)";
-    teamCopy.setAttribute("aria-hidden", teamActive ? "false" : "true");
-    teamCopy.style.opacity = teamActive ? String(smoothStep(clamp01((progressValue - 0.38) / 0.4))) : "0";
-    teamCopy.style.pointerEvents = progressValue > 0.54 ? "auto" : "none";
-    teamCopy.style.transform = teamActive ? `translate(${Math.max(0, teamShift)}px, -50%) scale(${0.992 + progressValue * 0.008})` : "translate(46px, -50%) scale(.99)";
+    const mobile = isMobileViewport();
+    if (mobile) {
+      const introVisible = progressValue < 0.42;
+      const teamVisible = progressValue > 0.56;
+      const introOpacity = 1 - smoothStep(clamp01((progressValue - 0.10) / 0.24));
+      const teamOpacity = smoothStep(clamp01((progressValue - 0.60) / 0.24));
+      introCopy.setAttribute("aria-hidden", introVisible ? "false" : "true");
+      introCopy.style.opacity = String(introOpacity);
+      introCopy.style.pointerEvents = progressValue < 0.28 ? "auto" : "none";
+      introCopy.style.transform = "none";
+      teamCopy.setAttribute("aria-hidden", teamVisible ? "false" : "true");
+      teamCopy.style.opacity = String(teamOpacity);
+      teamCopy.style.pointerEvents = progressValue > 0.76 ? "auto" : "none";
+      teamCopy.style.transform = "none";
+    } else {
+      const introShift = -70 * Math.min(1, progressValue / 0.46);
+      const teamShift = 70 * Math.max(0, 1 - (progressValue - 0.54) / 0.46);
+      introCopy.setAttribute("aria-hidden", introActive ? "false" : "true");
+      introCopy.style.opacity = introActive ? String(1 - smoothStep(clamp01((progressValue - 0.2) / 0.4))) : "0";
+      introCopy.style.pointerEvents = progressValue < 0.46 ? "auto" : "none";
+      introCopy.style.transform = introActive ? `translate(${introShift}px, -50%) scale(${1 - progressValue * 0.03})` : "translate(-70px, -50%) scale(.98)";
+      teamCopy.setAttribute("aria-hidden", teamActive ? "false" : "true");
+      teamCopy.style.opacity = teamActive ? String(smoothStep(clamp01((progressValue - 0.38) / 0.4))) : "0";
+      teamCopy.style.pointerEvents = progressValue > 0.54 ? "auto" : "none";
+      teamCopy.style.transform = teamActive ? `translate(${Math.max(0, teamShift)}px, -50%) scale(${0.985 + progressValue * 0.02})` : "translate(70px, -50%) scale(.98)";
+    }
     updateProgressUI(progressValue);
   }
   function applyMaterialState(t) {
@@ -33227,7 +33246,7 @@ void main() {
       from: progress,
       to: clamped,
       start: performance.now(),
-      duration: 1680
+      duration: isMobileViewport() ? 860 : 1280
     };
     targetProgress = clamped;
     motionEnergy = Math.max(motionEnergy, 0.42);
@@ -33253,17 +33272,71 @@ void main() {
     if (event.key === "ArrowLeft" || event.key === "PageUp") goTo(0);
   });
   addEventListener("wheel", (event) => {
-    if ((innerWidth <= 820 || (innerWidth <= 960 && innerHeight <= 540))) return;
+    if (isMobileViewport()) return;
     event.preventDefault();
     if (navigationTween) {
       navigationTween = null;
       targetProgress = progress;
     }
-    const impulse = MathUtils.clamp(event.deltaY * 114e-5, -0.13, 0.13);
-    targetProgress = clamp01(targetProgress + impulse * 0.95);
+    const impulse = MathUtils.clamp(event.deltaY * 102e-5, -0.13, 0.13);
+    targetProgress = clamp01(targetProgress + impulse * 0.9);
     motionEnergy = Math.min(1, motionEnergy + Math.abs(impulse) * 5.5);
     lastWheelAt = performance.now();
   }, { passive: false });
+  var touchGesture = null;
+  addEventListener("touchstart", (event) => {
+    if (!isMobileViewport() || event.touches.length !== 1) return;
+    const target = event.target;
+    if (target.closest("a, button, .people")) return;
+    if (teamCopy.classList.contains("is-services")) return;
+    const touch = event.touches[0];
+    touchGesture = {
+      x: touch.clientX,
+      y: touch.clientY,
+      lastY: touch.clientY,
+      startProgress: progress,
+      startedAt: performance.now(),
+      vertical: null
+    };
+    navigationTween = null;
+    transitionProgressOverride = null;
+    targetProgress = progress;
+  }, { passive: true });
+  addEventListener("touchmove", (event) => {
+    if (!touchGesture || event.touches.length !== 1 || !isMobileViewport()) return;
+    const touch = event.touches[0];
+    const dx = touch.clientX - touchGesture.x;
+    const dy = touch.clientY - touchGesture.y;
+    if (touchGesture.vertical === null && Math.max(Math.abs(dx), Math.abs(dy)) > 8) {
+      touchGesture.vertical = Math.abs(dy) >= Math.abs(dx) * 1.05;
+    }
+    if (!touchGesture.vertical) return;
+    event.preventDefault();
+    const travel = Math.max(260, innerHeight * 0.58);
+    const next = clamp01(touchGesture.startProgress - dy / travel);
+    progress = next;
+    targetProgress = next;
+    progressVelocity = 0;
+    currentScene = next > 0.5 ? 1 : 0;
+    motionEnergy = Math.min(1, Math.abs(touch.clientY - touchGesture.lastY) * 0.055 + 0.18);
+    touchGesture.lastY = touch.clientY;
+    applyPoseBlend(next, performance.now() * 1e-3);
+  }, { passive: false });
+  function finishTouchGesture(event) {
+    if (!touchGesture || !isMobileViewport()) return;
+    const changed = event.changedTouches && event.changedTouches[0];
+    const endY = changed ? changed.clientY : touchGesture.lastY;
+    const dy = endY - touchGesture.y;
+    const elapsed = Math.max(1, performance.now() - touchGesture.startedAt);
+    const velocity = -dy / elapsed;
+    const wasVertical = touchGesture.vertical;
+    touchGesture = null;
+    if (!wasVertical) return;
+    const destination = velocity > 0.22 || progress > 0.52 ? 1 : velocity < -0.22 || progress < 0.48 ? 0 : Math.round(progress);
+    goTo(destination);
+  }
+  addEventListener("touchend", finishTouchGesture, { passive: true });
+  addEventListener("touchcancel", finishTouchGesture, { passive: true });
   var dummy = new Object3D();
   var nodePositions = Array.from({ length: nodeCount }, () => new Vector3());
   var tempLocalPointer = new Vector3();
@@ -33353,19 +33426,29 @@ void main() {
     cursorLineGeometry.attributes.position.needsUpdate = true;
   }
   function updateCameraAndObjects(nowSeconds) {
-    const mobile = (innerWidth <= 820 || (innerWidth <= 960 && innerHeight <= 540));
+    const mobile = isMobileViewport();
     if (mobile) {
-      const mobileLandscape = innerWidth > innerHeight;
-      camera.position.set(pointer.x * 0.03, mobileLandscape ? 0.1 : 0.16, mobileLandscape ? 11.8 : 11.45);
-      camera.lookAt(0, mobileLandscape ? 0.02 : -0.03, 0);
-      xRoot.position.set(0, mobileLandscape ? 0.02 : -0.02, 0);
+      const t = smoothStep(liveProgress);
+      const landscape = innerWidth > innerHeight;
+      if (landscape) {
+        camera.position.set(pointer.x * 0.026, 0.08 + pointer.y * 0.018, 12.45);
+        camera.lookAt(0.30, 0.10, 0);
+        xRoot.position.set(2.05, 0.06, 0.04);
+        xRoot.scale.setScalar(currentScale * MathUtils.lerp(0.72, 0.70, t));
+        networkRoot.position.set(1.96, 0.03, -0.12);
+        networkRoot.scale.setScalar(MathUtils.lerp(0.78, 0.72, t));
+      } else {
+        camera.position.set(pointer.x * 0.028, 0.10 + pointer.y * 0.018, 12.55);
+        camera.lookAt(0, 0.14, 0);
+        xRoot.position.set(0, MathUtils.lerp(1.26, 1.85, t), 0.05);
+        xRoot.scale.setScalar(currentScale * MathUtils.lerp(0.65, 0.58, t));
+        networkRoot.position.set(0, MathUtils.lerp(1.20, 1.79, t), -0.12);
+        networkRoot.scale.setScalar(MathUtils.lerp(0.72, 0.66, t));
+      }
       xRoot.quaternion.copy(currentRootQuat);
-      xRoot.rotateX(pointer.y * 0.014);
-      xRoot.rotateY(pointer.x * 0.022);
-      xRoot.scale.setScalar(mobileLandscape ? 0.56 : 0.64);
-      networkRoot.position.set(0, mobileLandscape ? 0 : -0.02, -0.15);
+      xRoot.rotateX(pointer.y * 0.018);
+      xRoot.rotateY(pointer.x * 0.028);
       networkRoot.quaternion.copy(currentNetworkQuat);
-      networkRoot.scale.setScalar(mobileLandscape ? 0.74 : 0.82);
     } else {
       const px2 = pointer.x * 0.11;
       const py2 = pointer.y * 0.08;
@@ -33426,8 +33509,7 @@ void main() {
   }
   function onResize() {
     const w = innerWidth;
-    const mobileLayout = innerWidth <= 820 || (innerWidth <= 960 && innerHeight <= 540);
-  const h = mobileLayout ? (innerWidth > innerHeight ? innerHeight : Math.round(Math.min(innerHeight * 0.34, 310))) : innerHeight;
+    const h = innerHeight;
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     renderer.setSize(w, h, false);

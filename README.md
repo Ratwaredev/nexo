@@ -1,17 +1,52 @@
-# NEXO — landing interactiva
+NEXO landing — equipo pulido
 
-Landing de NEXO con experiencia desktop WebGL y rediseño mobile independiente.
-
-## Ejecutar
-
-Abrí `START_NEXO.bat` en Windows o serví la carpeta con cualquier servidor HTTP estático.
+Cambios de esta pasada:
+- separé más la X del bloque de texto en vista clara y oscura;
+- suavicé la transición de escena y reduje la agresividad del movimiento;
+- aumenté apenas la sensibilidad del scroll;
+- rehice el efecto del mouse en claro para que sea eléctrico azul y más procedural;
+- corregí la composición del bloque de equipo para que los botones no queden sobre las cabezas;
+- mejoré el layout mobile del estado oscuro;
+- atenué y limpié los bordes blancos de los retratos.
 
 Archivos principales:
+- index.html
+- bundle.js
+- assets/
+- src/
+- validation/
 
-- `index.html`: estructura y estilos embebidos de producción.
-- `bundle.js`: escena Three.js y X 3D original.
-- `src/`: fuentes editables.
-- `assets/`: retratos y fallback de la X original.
-- `validation/`: capturas y reporte de la matriz responsive.
+Validación incluida:
+- validation/desktop-light-pulido.png
+- validation/desktop-dark-pulido.png
+- validation/mobile-dark-pulido.png
+- validation/state-dark.json
+- validation/state-mobile.json
 
-Los detalles del rework están en `MOBILE_REDESIGN.md`.
+Última corrección — equipo sin fondo:
+- retratos transparentes reales sobre el fondo oscuro;
+- limpieza del halo blanco en los bordes;
+- composición abierta con líneas finas, sin cards blancas ni fondos rectangulares;
+- escala y alineación ajustadas para que los tres retratos tengan presencia equivalente;
+- mobile convertido en carrusel horizontal con snap y sin overflow de página;
+- validación Playwright en 1440×1000, 1366×768 y 390×844 dentro de `validation_final/`.
+
+## Correcciones de interacción
+- El efecto de partículas y conexión con el mouse permanece activo en la escena oscura.
+- La red conserva visibilidad en ambas escenas.
+- “Qué hacemos” abre una vista interna de servicios.
+- “Volver al equipo” regresa al equipo y “Volver” continúa regresando al inicio.
+
+## Rework mobile cinematográfico
+
+La versión mobile ya no convierte la experiencia en una landing con scroll. Mantiene el mismo concepto de desktop:
+
+- inicia en la escena blanca;
+- usa la X 3D original y la red procedural existente;
+- el gesto vertical controla directamente el progreso de la transición y el giro;
+- la segunda escena conserva el fondo oscuro, el equipo y la vista interna de servicios;
+- el equipo usa desplazamiento horizontal táctil para no comprimir los tres perfiles;
+- landscape tiene una composición propia;
+- desktop no fue rediseñado ni reemplazado.
+
+Las capturas finales están en `validation_mobile/`.

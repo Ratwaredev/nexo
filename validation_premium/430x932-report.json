@@ -1,0 +1,72 @@
+{
+  "viewport": "430x932",
+  "states": {
+    "white": {
+      "sw": 430,
+      "cw": 430,
+      "sh": 932,
+      "ch": 932,
+      "state": {
+        "scene": 0,
+        "progress": 0,
+        "targetProgress": 0,
+        "transitioning": true,
+        "canvas": {
+          "width": 430,
+          "height": 932
+        },
+        "viewport": {
+          "width": 430,
+          "height": 932
+        }
+      }
+    },
+    "turn": {
+      "sw": 430,
+      "cw": 430,
+      "sh": 932,
+      "ch": 932,
+      "state": {
+        "scene": 0,
+        "progress": 0.5,
+        "targetProgress": 0.5,
+        "transitioning": true,
+        "canvas": {
+          "width": 430,
+          "height": 932
+        },
+        "viewport": {
+          "width": 430,
+          "height": 932
+        }
+      }
+    },
+    "team": {
+      "sw": 430,
+      "cw": 430,
+      "sh": 932,
+      "ch": 932,
+      "state": {
+        "scene": 0,
+        "progress": 1,
+        "targetProgress": 1,
+        "transitioning": true,
+        "canvas": {
+          "width": 430,
+          "height": 932
+        },
+        "viewport": {
+          "width": 430,
+          "height": 932
+        }
+      }
+    },
+    "services": {
+      "sw": 430,
+      "cw": 430,
+      "sh": 932,
+      "ch": 932
+    }
+  },
+  "errors": []
+}
